@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070b16">
+<meta name="description" content="Watch the featured video in a clean, mobile-friendly page.">
+<title>VideoZone — Featured Video</title>
+<style>
+  :root{color-scheme:dark;--bg:#060914;--panel:#0b1425;--muted:#a8b7cc;--red:#ff304d;--pink:#ff5578;--line:#20314b}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f7f9ff;background:radial-gradient(ellipse at 50% -15%,#18304c 0,transparent 48%),linear-gradient(160deg,#080d19,#03050c 75%)}
+  .wrap{width:min(980px,calc(100% - 32px));margin:auto;padding:26px 0 30px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+  .brand{display:flex;align-items:center;gap:11px;font-size:clamp(21px,4vw,29px);font-weight:850;letter-spacing:-.8px}
+  .brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#ff6a7c,#e5002b);box-shadow:0 7px 24px #ff244a55;font-size:20px}
+  .brand span:last-child{color:var(--red)}
+  .top-note{color:#c4d0e1;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  .hero{position:relative;overflow:hidden;border:1px solid #ff526a88;border-radius:24px;background:#111a29;box-shadow:0 0 0 1px #2f9bff22,0 18px 60px #0008,0 0 38px #ff244a18}
+  .thumb-link{display:block;position:relative;color:inherit;text-decoration:none}
+  .thumb{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#101827}
+  .thumb-link:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0206119c,transparent 45%);pointer-events:none}
+  .quality{position:absolute;top:16px;left:16px;z-index:1;padding:7px 11px;border-radius:9px;background:#07101dd9;border:1px solid #ffffff2b;font-size:12px;font-weight:800;letter-spacing:.08em}
+  .play{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:78px;height:78px;display:grid;place-items:center;border-radius:50%;background:#ff2348e8;border:2px solid #ffffffcc;box-shadow:0 0 0 10px #ff304d35,0 8px 35px #0008;transition:transform .2s,filter .2s}
+  .play svg{width:27px;height:27px;margin-left:4px;fill:white}
+  .thumb-link:hover .play{transform:translate(-50%,-50%) scale(1.08);filter:brightness(1.12)}
+  .below{padding:28px 4px 0}
+  .eyebrow{margin:0 0 9px;color:#ff7188;text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:.2em}
+  h1{font-size:clamp(32px,6vw,56px);line-height:1.05;letter-spacing:-1.8px;margin:0;font-weight:900}
+  h1 span{color:var(--red)}
+  .sub{font-size:clamp(15px,2.5vw,19px);line-height:1.55;color:var(--muted);margin:13px 0 24px;max-width:680px}
+  .cta-row{display:flex;justify-content:center;margin:24px 0 28px}
+  .cta{position:relative;isolation:isolate;overflow:hidden;display:flex;justify-content:center;align-items:center;gap:13px;width:min(620px,100%);min-height:116px;padding:22px 24px;border:2px solid #ff8295;border-radius:22px;text-decoration:none;color:#fff;font-size:clamp(16px,3.3vw,23px);font-weight:900;letter-spacing:.035em;text-align:center;background:linear-gradient(90deg,#080b16d9 0%,#080b1688 45%,#ed1238a8 100%),url("https://cdn.aceimg.com/ei9lMnzlx.jpg") center 42%/cover no-repeat;box-shadow:inset 0 2px 0 #ffffff55,0 7px 0 #7d0a20,0 0 30px #ff244a65;transition:transform .18s,box-shadow .18s}
+  .cta:hover{transform:translateY(-2px);box-shadow:inset 0 2px 0 #ffffff72,0 9px 0 #7d0a20,0 0 42px #ff244a8c}
+  .cta:active{transform:translateY(3px);box-shadow:inset 0 2px 0 #ffffff72,0 3px 0 #7d0a20,0 0 20px #ff244a55}
+  .cta svg{width:22px;height:22px;fill:currentColor;flex:none;filter:drop-shadow(0 2px 4px #000)}
+  .cta span{position:relative;text-shadow:0 2px 6px #000;z-index:1}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0 26px}
+  .feature{border:1px solid var(--line);background:linear-gradient(145deg,#0c1729b8,#080e1b);border-radius:15px;padding:17px 14px;text-align:center}
+  .feature-icon{display:inline-grid;place-items:center;width:36px;height:36px;margin-bottom:9px;color:#ff526a;border-radius:11px;background:#ff304d16}
+  .feature-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .feature strong{display:block;font-size:14px;margin-bottom:5px}
+  .feature small{color:var(--muted);font-size:12px;line-height:1.45}
+  .note{padding:16px 18px;border:1px solid #20314b;border-radius:14px;color:#b9c7da;background:#07101c;font-size:13px;line-height:1.6}
+  footer{display:flex;align-items:center;justify-content:center;gap:12px;color:#8194ad;font-size:11px;letter-spacing:.22em;text-align:center;margin-top:28px}
+  footer:before,footer:after{content:"";height:1px;background:#20314b;flex:1}
+  a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+  @media(max-width:560px){.wrap{width:min(100% - 22px,980px);padding-top:18px}.top-note{font-size:10px}.hero{border-radius:17px}.play{width:62px;height:62px}.below{padding-top:23px}.features{grid-template-columns:1fr;gap:9px}.feature{display:flex;align-items:center;text-align:left;gap:12px;padding:12px 14px}.feature-icon{margin:0;flex:none}.feature small{display:block}.cta{min-height:64px;padding:15px 16px}.quality{top:10px;left:10px}.note{font-size:12px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><span class="brand-mark" aria-hidden="true">▶</span><div>Video<span>Zone</span></div></div>
+    <div class="top-note">Featured video&nbsp; • &nbsp;HD experience</div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Featured video thumbnail">
+      <a class="thumb-link" href="https://t.co/6Jr3nOQFYj" target="_blank" rel="noopener noreferrer" aria-label="Open the featured video">
+        <img class="thumb" src="https://cdn.aceimg.com/Ez3rx6l5p.png" alt="Featured video preview" fetchpriority="high">
+        <span class="quality">HD PREVIEW</span>
+        <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.8c0-.8.9-1.3 1.6-.8l11 7.2a1 1 0 0 1 0 1.6l-11 7.2c-.7.5-1.6 0-1.6-.8z"/></svg></span>
+      </a>
+    </section>
+
+    <section class="below">
+      <p class="eyebrow">Your next watch starts here</p>
+      <h1>Ready for the <span>full video?</span></h1>
+      <p class="sub">Tap below to continue to the video. Simple, clear, and easy to view on mobile or desktop.</p>
+      <div class="cta-row">
+        <a class="cta" href="https://t.co/6Jr3nOQFYj" target="_blank" rel="noopener noreferrer" aria-label="Watch full video using the woman image button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8c0-.8.9-1.3 1.6-.8l11 7.2a1 1 0 0 1 0 1.6l-11 7.2c-.7.5-1.6 0-1.6-.8z"/></svg>
+          <span>WATCH FULL VIDEO</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M4 12h15M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="features" aria-label="Page features">
+        <div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24"><path d="m13 2-9 12h7l-1 8 10-13h-7z"/></svg></span><div><strong>Quick &amp; Easy</strong><small>One clear link to continue</small></div></div>
+        <div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg></span><div><strong>Clear Destination</strong><small>No hidden click behavior</small></div></div>
+        <div class="feature"><span class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><div><strong>Mobile Friendly</strong><small>Responsive on different screens</small></div></div>
+      </div>
+      <div class="note"><strong>Before you continue:</strong> The button opens the linked destination in a new tab. Make sure the thumbnail accurately represents the video and that the destination follows the rules of the platform where you share this page.</div>
+    </section>
+  </main>
+  <footer>THANKS FOR STOPPING BY</footer>
+</div>
+</body>
+</html>
